@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -97,6 +97,17 @@ namespace SA
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            // check if file exists
+            if (!File.Exists(filename_))
+            {   
+                labelStatus.Text = "Error:" + Environment.NewLine;
+                labelStatus.Text += Environment.NewLine;
+                labelStatus.Text += "Subtitle file not found";
+                labelStatus.Visible = true;
+                return;
+            }
+
+
             // get speed and delay
             double speed = 1.0;
             long delay = 0;
