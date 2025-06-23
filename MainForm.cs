@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -17,7 +17,7 @@ namespace SA
         {
             InitializeComponent();
 
-            labelVersion.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            labelVersion.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 
             filename_ = "";
         }
@@ -198,7 +198,9 @@ namespace SA
             File.WriteAllText(adjustedPath, adjustedSubtitles);
 
             labelStatus.Visible = true;
-            labelStatus.Text = "Adjusted subtitles saved to file:\n" + adjustedPath;
+            labelStatus.Text = "Adjusted subtitles saved to file:" + Environment.NewLine;
+            labelStatus.Text += Environment.NewLine;
+            labelStatus.Text += adjustedPath;
         }
 
         private void buttonQuit_Click(object sender, EventArgs e)

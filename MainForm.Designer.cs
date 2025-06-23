@@ -110,7 +110,7 @@
             this.labelVersion.BackColor = System.Drawing.Color.Transparent;
             this.labelVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelVersion.ForeColor = System.Drawing.Color.Gray;
-            this.labelVersion.Location = new System.Drawing.Point(11, 15);
+            this.labelVersion.Location = new System.Drawing.Point(18, 12);
             this.labelVersion.Margin = new System.Windows.Forms.Padding(3);
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(62, 13);
@@ -293,7 +293,7 @@
             this.panelAdjust.Enabled = false;
             this.panelAdjust.Location = new System.Drawing.Point(18, 137);
             this.panelAdjust.Name = "panelAdjust";
-            this.panelAdjust.Size = new System.Drawing.Size(581, 339);
+            this.panelAdjust.Size = new System.Drawing.Size(581, 327);
             this.panelAdjust.TabIndex = 21;
             // 
             // panelPositions
@@ -324,7 +324,7 @@
             this.labelComputedDelay.ForeColor = System.Drawing.Color.DimGray;
             this.labelComputedDelay.Location = new System.Drawing.Point(356, 82);
             this.labelComputedDelay.Name = "labelComputedDelay";
-            this.labelComputedDelay.Size = new System.Drawing.Size(47, 16);
+            this.labelComputedDelay.Size = new System.Drawing.Size(46, 16);
             this.labelComputedDelay.TabIndex = 34;
             this.labelComputedDelay.Text = "Delay:";
             this.labelComputedDelay.Visible = false;
@@ -336,7 +336,7 @@
             this.labelComputedSpeed.ForeColor = System.Drawing.Color.DimGray;
             this.labelComputedSpeed.Location = new System.Drawing.Point(61, 82);
             this.labelComputedSpeed.Name = "labelComputedSpeed";
-            this.labelComputedSpeed.Size = new System.Drawing.Size(52, 16);
+            this.labelComputedSpeed.Size = new System.Drawing.Size(51, 16);
             this.labelComputedSpeed.TabIndex = 33;
             this.labelComputedSpeed.Text = "Speed:";
             this.labelComputedSpeed.Visible = false;
