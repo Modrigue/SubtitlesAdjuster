@@ -199,7 +199,6 @@ namespace SA
 
             labelStatus.Visible = true;
             labelStatus.Text = "Adjusted subtitles saved to file:" + Environment.NewLine;
-            labelStatus.Text += Environment.NewLine;
             labelStatus.Text += adjustedPath;
         }
 
