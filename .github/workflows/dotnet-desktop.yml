@@ -1,0 +1,24 @@
+name: Build .NET Framework Desktop App
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.3
+
+    - name: Restore NuGet packages
+      run: nuget restore SA.sln
+
+    - name: Build with MSBuild
+      run: msbuild SA.sln /p:Configuration=Release
