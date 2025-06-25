@@ -2,23 +2,69 @@ name: Build .NET Framework Desktop App
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - "**"
+    tags:
+      - "*"
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
     runs-on: windows-2022
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.3
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.3
 
-    - name: Restore NuGet packages
-      run: nuget restore SA.sln
+      - name: Restore NuGet packages
+        run: nuget restore SA.sln
 
-    - name: Build with MSBuild
-      run: msbuild SA.sln /p:Configuration=Release
+      - name: Build with MSBuild
+        run: msbuild SA.sln /p:Configuration=Release
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.3
+
+      - name: Restore NuGet Packages
+        run: nuget restore SA.sln
+
+      - name: Build with MSBuild
+        run: msbuild SA.sln /p:Configuration=Release
+
+      - name: Package Artifacts
+        run: |
+          $Tag = "${{ github.ref_name }}"
+          $ZipName = "SubtitlesAdjuster_$Tag.zip"
+          mkdir output
+          copy /Y bin\Release\*.exe output\
+          powershell Compress-Archive -Path output\* -DestinationPath $ZipName
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Subtitles Adjuster ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: SubtitlesAdjuster_${{ github.ref_name }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
