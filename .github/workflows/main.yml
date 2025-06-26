@@ -18,14 +18,14 @@ jobs:
     if: "!startsWith(github.ref, 'refs/tags/')"
     uses: ./.github/workflows/build-dotnet-framework.yml
     with:
-      solution: $SOLUTION_FILE
+      solution: $env:SOLUTION_FILE
 
   release:
     name: Build on Tag
     if: startsWith(github.ref, 'refs/tags/')
     uses: ./.github/workflows/build-dotnet-framework.yml
     with:
-      solution: $SOLUTION_FILE
+      solution: $env:SOLUTION_FILE
 
   zip-and-publish:
     name: Zip & Publish
