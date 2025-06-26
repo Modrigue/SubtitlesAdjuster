@@ -20,11 +20,17 @@ jobs:
     runs-on: windows-2022
 
     steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: output
+
       - name: Zip Build Output
         run: |
           $Tag = "${{ github.ref_name }}"
           $ZipName = "SubtitlesAdjuster_$Tag.zip"
-          powershell Compress-Archive -Path bin\Release\*.exe -DestinationPath $ZipName
+          powershell Compress-Archive -Path output\*.exe -DestinationPath $ZipName
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
