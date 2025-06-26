@@ -49,7 +49,7 @@ jobs:
           $Tag = "${{ github.ref_name }}"
           $ZipName = "SubtitlesAdjuster_$Tag.zip"
           mkdir output
-          copy /Y bin\Release\*.exe output\
+          Copy-Item .\bin\Release\*.exe -Destination output -Force
           powershell Compress-Archive -Path output\* -DestinationPath $ZipName
 
       - name: Create GitHub Release
