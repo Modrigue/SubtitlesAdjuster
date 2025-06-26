@@ -12,6 +12,9 @@ on:
         description: "Build output path"
         value: ${{ jobs.build.outputs.output-path }}
 
+env:
+  SOLUTION_FILE: SA.sln
+
 jobs:
   build:
     runs-on: windows-2022
@@ -24,50 +27,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.3
 
       - name: Restore NuGet packages
-        run: nuget restore SA.sln
+        run: nuget restore $SOLUTION_FILE
 
       - name: Build with MSBuild
-        run: msbuild SA.sln /p:Configuration=Release
-
-  release:
-    needs: build
-    if: startsWith(github.ref, 'refs/tags/')
-    runs-on: windows-2022
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.3
-
-      - name: Restore NuGet Packages
-        run: nuget restore SA.sln
-
-      - name: Build with MSBuild
-        run: msbuild SA.sln /p:Configuration=Release
-
-      - name: Package Artifacts
-        run: |
-          $Tag = "${{ github.ref_name }}"
-          $ZipName = "SubtitlesAdjuster_$Tag.zip"
-          mkdir output
-          Copy-Item .\bin\Release\*.exe -Destination output -Force
-          powershell Compress-Archive -Path output\* -DestinationPath $ZipName
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref_name }}
-          name: Subtitles Adjuster ${{ github.ref_name }}
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Release Asset
-        uses: softprops/action-gh-release@v1
-        with:
-          files: SubtitlesAdjuster_${{ github.ref_name }}.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: msbuild $SOLUTION_FILE /p:Configuration=Release
