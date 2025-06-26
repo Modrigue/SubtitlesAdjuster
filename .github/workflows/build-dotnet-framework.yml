@@ -1,13 +1,16 @@
 name: Build .NET Framework Desktop App
 
 on:
-  push:
-    branches:
-      - "**"
-    tags:
-      - "*"
-  pull_request:
-    branches: [master]
+  workflow_call:
+    inputs:
+      solution:
+        required: true
+        type: string
+
+    outputs:
+      output-path:
+        description: "Build output path"
+        value: ${{ jobs.build.outputs.output-path }}
 
 jobs:
   build:
