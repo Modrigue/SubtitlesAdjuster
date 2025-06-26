@@ -31,3 +31,10 @@ jobs:
 
       - name: Build with MSBuild
         run: msbuild $env:SOLUTION_FILE /p:Configuration=Release
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: bin\Release
+          retention-days: 0.01
