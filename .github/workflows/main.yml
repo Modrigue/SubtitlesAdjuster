@@ -14,22 +14,14 @@ env:
 
 jobs:
   build:
-    name: Build on Commit
-    if: "!startsWith(github.ref, 'refs/tags/')"
-    uses: ./.github/workflows/build-dotnet-framework.yml
-    with:
-      solution: $env:SOLUTION_FILE
-
-  release:
-    name: Build on Tag
-    if: startsWith(github.ref, 'refs/tags/')
+    name: Build
     uses: ./.github/workflows/build-dotnet-framework.yml
     with:
       solution: $env:SOLUTION_FILE
 
   zip-and-publish:
     name: Zip & Publish
-    needs: release
+    needs: build
     runs-on: windows-2022
     if: startsWith(github.ref, 'refs/tags/')
     steps:
