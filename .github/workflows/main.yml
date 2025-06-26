@@ -43,7 +43,7 @@ jobs:
         run: |
           $Tag = "${{ github.ref_name }}"
           $ZipName = "SubtitlesAdjuster_$Tag.zip"
-          powershell Compress-Archive -Path output\* -DestinationPath $ZipName
+          powershell Compress-Archive -Path output\*.exe -DestinationPath $ZipName
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
