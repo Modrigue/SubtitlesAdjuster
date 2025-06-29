@@ -31,7 +31,6 @@ def update_assembly_version(tag):
 
 def main():
     tag = get_tag_from_ref(GITHUB_REF)
-    tag = "1.2.3"
     if not tag:
         return
     
