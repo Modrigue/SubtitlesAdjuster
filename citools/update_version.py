@@ -16,13 +16,13 @@ def get_tag_from_ref(ref):
     return None
 
 def update_assembly_version(tag):
-    pattern = re.compile(r'\[assembly: AssemblyVersion\("[0-9]+\.[0-9]+\.[0-9]+\.\*"\)\]')
-    replacement = f'[assembly: AssemblyVersion("{tag}.*")]'
+    pattern = re.compile(r'Version\(".*"\)')
+    replacement = f'Version("{tag}.*")'
 
     with open(ASSEMBLY_INFO_PATH, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Replace the version line
+    # Replace version lines
     new_content, count = pattern.subn(replacement, content)
     if count > 0 and new_content != content:
         with open(ASSEMBLY_INFO_PATH, 'w', encoding='utf-8') as f:
@@ -31,6 +31,7 @@ def update_assembly_version(tag):
 
 def main():
     tag = get_tag_from_ref(GITHUB_REF)
+    tag = "1.2.3"
     if not tag:
         return
     
