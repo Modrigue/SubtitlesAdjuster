@@ -59,9 +59,11 @@ namespace SA
 
         private void buttonOpen_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "Subtitles files|*.srt;*.sub";
-            openFileDialog1.FileName = "";
+            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            {
+                Filter = "Subtitles files|*.srt;*.sub",
+                FileName = ""
+            };
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -239,9 +241,7 @@ namespace SA
         private void timepickerPosition_ValueChanged(object sender, EventArgs e)
         {
             // update speed and delay displayed values
-            double speed = 1.0;
-            long delay = 0;
-            computeSpeedDelayFromPositions(out speed, out delay);
+            computeSpeedDelayFromPositions(out double speed, out long delay);
 
             bool idle = (speed == 1.0 && delay == 0);
 
@@ -289,7 +289,7 @@ namespace SA
             string posExp1 = timepickerPosExp1.Value.ToLongTimeString() + "," + numericupdownMilliPosExp1.Value.ToString("000");
             string posExp2 = timepickerPosExp2.Value.ToLongTimeString() + "," + numericupdownMilliPosExp2.Value.ToString("000");
 
-            Tools.SubtitleType type = Tools.SubtitleType.None; // dummy
+            Tools.SubtitleType type;
             long milliCur1 = Tools.TimeToMilliseconds(posCur1, out type);
             long milliCur2 = Tools.TimeToMilliseconds(posCur2, out type);
             long milliExp1 = Tools.TimeToMilliseconds(posExp1, out type);
